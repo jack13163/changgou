@@ -1,0 +1,38 @@
+server:
+  port: 6625
+
+
+# Eureka注册中心配置信息
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+# 使用通用mapper可以不配置mybatis
+
+# 页面设置
+spring:
+  thymeleaf:
+    enabled: true
+    cache: false
+  application:
+    name: web-search
+  devtools:
+    restart:
+      enabled: true
+
+#超时设置
+ribbon:
+  ReadTimeout: 300000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000

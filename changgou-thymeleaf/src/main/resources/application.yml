@@ -1,0 +1,11 @@
+server:
+  port: 2669
+spring:
+  application:
+    name: web
+
+  thymeleaf:
+    enabled: true
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html

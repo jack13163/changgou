@@ -1,0 +1,43 @@
+server:
+  port: 5539
+
+spring:
+  application:
+    name: search
+  elasticsearch:
+    rest:
+      uris: 192.168.137.118:9200
+  data:
+    elasticsearch:
+      cluster-name: my-application
+      cluster-nodes: 192.168.137.118:9300
+      repositories:
+        enabled: true
+
+
+
+# Eureka注册中心配置信息
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+# 使用通用mapper可以不配置mybatis
+
+#超时设置
+ribbon:
+  ReadTimeout: 300000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+
+
