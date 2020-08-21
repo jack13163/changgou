@@ -1,0 +1,74 @@
+spring:
+  application:
+    name: gateway-web
+  # spring-cloud网关跨域问题
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]': # 匹配所有请求
+            allowedOrigins: "*" # 允许所有的域
+            allowedMethods: # 支持的方法
+              - GET
+              - POST
+              - PUT
+              - DELETE
+      routes:
+        # 商品微服务唯一标识
+        - id: changgou_goods_route
+          # 指定要路由的服务
+          uri: lb://goods
+          predicates:
+          - Path=/api/goods/**
+          filters:
+            - StripPrefix=2
+            - name: RequestRateLimiter # 局部限流过滤器
+              args:
+                # 指定唯一标识
+                key-resolver: "#{@ipKeyResolver}"
+                # 每秒钟只允许1个请求
+                redis-rate-limiter.replenishRate: 1
+                # 最大允许并发请求的数量
+                redis-rate-limiter.burstCapacity: 1
+        # 用户微服务唯一标识
+        - id: changgou_user_route
+          # 指定要路由的服务
+          uri: lb://user
+          predicates:
+          - Path=/api/user/**,/api/address/**,/api/area/**,/api/cities/**,/api/provinces/**
+          filters:
+            - StripPrefix=1
+
+  # Redis配置
+  redis:
+    host: 192.168.137.118
+    port: 6379
+
+server:
+  port: 5656
+
+# Eureka注册中心配置信息
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+
+# gateway配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: true
+  endpoint:
+    # 何时显示完整的健康详细信息。
+    health:
+      show-details: always
+    gateway:
+      enabled: true
+
+
