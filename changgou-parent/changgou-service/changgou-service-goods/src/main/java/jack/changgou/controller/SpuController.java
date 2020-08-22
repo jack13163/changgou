@@ -29,7 +29,7 @@ public class SpuController {
     }
 
     @GetMapping("/{id}")
-    public Result<Spu> getSpu(@PathVariable("id") Integer id) {
+    public Result<Spu> getSpu(@PathVariable("id") Long id) {
         Spu spu = spuService.getSpuById(id);
         Result<Spu> result = null;
         if (spu != null) {
@@ -63,7 +63,7 @@ public class SpuController {
     }
 
     @DeleteMapping("/{id}")
-    public Result<String> modefyBrand(@PathVariable("id") Integer id) {
+    public Result<String> modefyBrand(@PathVariable("id") Long id) {
         spuService.deleteSpuById(id);
         Result<String> result = new Result<>(true, StatusCode.OK, "删除商品Spu成功", null);
         return result;

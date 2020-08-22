@@ -78,6 +78,7 @@ public class OauthResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         // 所有请求必须认证通过
         http.authorizeRequests()
+//                .antMatchers("/user/add", "/user/load/*").permitAll()// 当前地址【用户注册】放行
                 .antMatchers("/user/add").permitAll()// 当前地址【用户注册】放行
                 .anyRequest().authenticated();// 其他地址需要认证授权
     }

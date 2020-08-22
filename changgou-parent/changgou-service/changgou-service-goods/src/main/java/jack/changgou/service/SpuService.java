@@ -16,7 +16,7 @@ public interface SpuService {
      * 根据Id查询Spu
      * @return
      */
-    Spu getSpuById(Integer id);
+    Spu getSpuById(Long id);
     /**
      * 添加Spu
      * @return
@@ -31,7 +31,7 @@ public interface SpuService {
      * 根据Id删除Spu
      * @return
      */
-    void deleteSpuById(Integer id);
+    void deleteSpuById(Long id);
     /**
      * 根据条件查询Spu
      * @return

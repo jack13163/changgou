@@ -24,7 +24,7 @@ public class SkuServiceImpl implements SkuService {
     }
 
     @Override
-    public Sku getSkuById(Integer id) {
+    public Sku getSkuById(Long id) {
         return SkuMapper.selectByPrimaryKey(id);
     }
 
@@ -39,7 +39,7 @@ public class SkuServiceImpl implements SkuService {
     }
 
     @Override
-    public void deleteSkuById(Integer id) {
+    public void deleteSkuById(Long id) {
         SkuMapper.deleteByPrimaryKey(id);
     }
 

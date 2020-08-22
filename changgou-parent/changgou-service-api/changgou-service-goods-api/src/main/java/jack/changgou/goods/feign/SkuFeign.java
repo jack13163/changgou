@@ -19,4 +19,12 @@ public interface SkuFeign {
      */
     @GetMapping("/search/{page}/{size}")
     Result<PageInfo<Sku>> searchSkuPaged(@PathVariable("page") Integer page, @PathVariable("size") Integer size);
+
+    /**
+     * 根据id查询商品详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    Result<Sku> getSku(@PathVariable("id") Long id);
 }

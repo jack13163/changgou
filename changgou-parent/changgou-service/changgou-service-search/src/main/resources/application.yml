@@ -13,6 +13,8 @@ spring:
       cluster-nodes: 192.168.137.118:9300
       repositories:
         enabled: true
+  main:
+    allow-bean-definition-overriding: true
 
 
 

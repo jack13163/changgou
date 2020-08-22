@@ -25,7 +25,7 @@ public class SkuController {
     }
 
     @GetMapping("/{id}")
-    public Result<Sku> getSku(@PathVariable("id") Integer id) {
+    public Result<Sku> getSku(@PathVariable("id") Long id) {
         Sku Sku = SkuService.getSkuById(id);
         Result<Sku> result = null;
         if (Sku != null) {
@@ -59,7 +59,7 @@ public class SkuController {
     }
 
     @DeleteMapping("/{id}")
-    public Result<String> modefyBrand(@PathVariable("id") Integer id) {
+    public Result<String> modefyBrand(@PathVariable("id") Long id) {
         SkuService.deleteSkuById(id);
         Result<String> result = new Result<>(true, StatusCode.OK, "删除商品Sku成功", null);
         return result;

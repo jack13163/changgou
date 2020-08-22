@@ -44,7 +44,7 @@ public class SpuServiceImpl implements SpuService {
     }
 
     @Override
-    public Spu getSpuById(Integer id) {
+    public Spu getSpuById(Long id) {
         return spuMapper.selectByPrimaryKey(id);
     }
 
@@ -59,7 +59,7 @@ public class SpuServiceImpl implements SpuService {
     }
 
     @Override
-    public void deleteSpuById(Integer id) {
+    public void deleteSpuById(Long id) {
         spuMapper.deleteByPrimaryKey(id);
     }
 

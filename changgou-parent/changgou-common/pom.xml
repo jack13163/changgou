@@ -53,6 +53,12 @@
             <artifactId>jjwt</artifactId>
             <version>0.6.0</version>
         </dependency>
+
+        <!-- oauth2.0 令牌解析使用依赖 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
     </dependencies>
 
 

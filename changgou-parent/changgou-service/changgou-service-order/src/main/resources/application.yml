@@ -1,0 +1,38 @@
+server:
+  port: 7752
+spring:
+  application:
+    name: order
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.137.118:3307/changgou_order?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 123456
+  redis:
+    host: 192.168.137.118
+    port: 6379
+
+  # 多个接口上的@FeignClient(“相同服务名”)会报错，overriding is disabled。
+  # 设置 为true ,即 允许 同名
+  main:
+    allow-bean-definition-overriding: true
+
+# Eureka注册中心配置信息
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+# 开启信号量隔离
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+          strategy: SEMAPHORE

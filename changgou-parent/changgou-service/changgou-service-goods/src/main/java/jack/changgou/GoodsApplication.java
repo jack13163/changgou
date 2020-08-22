@@ -1,5 +1,6 @@
 package jack.changgou;
 
+import jack.changgou.vo.FeignRequestInterceptor;
 import jack.changgou.vo.IdWorker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,5 +23,16 @@ public class GoodsApplication {
     @Bean
     public IdWorker IdWorker(){
         return new IdWorker();
+    }
+
+
+    /**
+     * 将Feign拦截器注入到容器中
+     * 解决微服务之间的服务调用问题，当前微服务Feign调用其他微服务时会将自己的令牌传递过去
+     * @return
+     */
+    @Bean
+    public FeignRequestInterceptor feignInterceptor(){
+        return new FeignRequestInterceptor();
     }
 }

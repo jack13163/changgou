@@ -15,7 +15,7 @@ public interface SkuService {
      * 根据Id查询Sku
      * @return
      */
-    Sku getSkuById(Integer id);
+    Sku getSkuById(Long id);
     /**
      * 添加Sku
      * @return
@@ -30,7 +30,7 @@ public interface SkuService {
      * 根据Id删除Sku
      * @return
      */
-    void deleteSkuById(Integer id);
+    void deleteSkuById(Long id);
     /**
      * 根据SpuId删除Sku
      * @return
