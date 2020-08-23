@@ -6,9 +6,11 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
 import jack.changgou.vo.Result;
 import jack.changgou.vo.StatusCode;
+import jack.changgou.vo.TokenDecode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /****
@@ -24,6 +26,13 @@ public class AddressController {
 
     @Autowired
     private AddressService addressService;
+
+    @GetMapping("/user/list")
+    public Result<List<Address>> getAddressesByUserName() throws IOException {
+        String username = TokenDecode.getUserInfo().get("username");
+        List<Address> list = addressService.getAddressesByUserName(username);
+        return new Result<List<Address>>(true,StatusCode.OK,"查询[" + username + "]的地址信息成功",list);
+    }
 
     /***
      * Address分页条件搜索实现

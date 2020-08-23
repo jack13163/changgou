@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/sku")
@@ -24,7 +25,29 @@ public class SkuController {
         return result;
     }
 
-    @GetMapping("/{id}")
+    /**
+     * 商品库存递减
+     * key: 商品Id
+     * value: 递减的数量
+     * @RequestParam 接收的参数是来自requestHeader中，即请求头。
+     * 用来处理 Content-Type 为 application/x-www-form-urlencoded 编码的内容，Content-Type默认为该属性。
+     *
+     * @RequestBody 接收的参数是来自requestBody中，即请求体。一般用于处理非 Content-Type: application/x-www-form-urlencoded编码格式的数据，
+     * 比如：application/json、application/xml等类型的数据。
+     * 就application/json类型的数据而言，使用注解@RequestBody可以将body里面所有的json数据传到后端，后端再进行解析。
+     *
+     * @param map
+     * @return
+     */
+    @GetMapping("/decr/count")
+    public Result decrCount(@RequestParam Map<String, Integer> map){
+        SkuService.decrCount(map);
+
+        Result<String> result = new Result<>(true, StatusCode.OK, "商品Sku库存减少成功");
+        return result;
+    }
+
+  @GetMapping("/{id}")
     public Result<Sku> getSku(@PathVariable("id") Long id) {
         Sku Sku = SkuService.getSkuById(id);
         Result<Sku> result = null;

@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class TockenDecode {
+public class TokenDecode {
     /**
      * 获取用户信息
      * @return

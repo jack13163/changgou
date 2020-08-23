@@ -66,4 +66,11 @@ public interface AddressService {
      * @return
      */
     List<Address> findAll();
+
+    /**
+     * 根据用户名查询用户信息
+     * @param username
+     * @return
+     */
+    List<Address> getAddressesByUserName(String username);
 }

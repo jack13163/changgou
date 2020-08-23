@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import jack.changgou.goods.pojo.Sku;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SkuService {
     /**
@@ -54,4 +55,10 @@ public interface SkuService {
      * @return
      */
     PageInfo<Sku> searchSkuPaged(Sku Sku, Integer page, Integer size);
+
+    /**
+     * 商品批量减少库存
+     * @param map
+     */
+    void decrCount(Map<String, Integer> map);
 }

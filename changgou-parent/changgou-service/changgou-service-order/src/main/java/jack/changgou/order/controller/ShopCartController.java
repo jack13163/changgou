@@ -4,7 +4,7 @@ import jack.changgou.order.pojo.OrderItem;
 import jack.changgou.order.service.ShopCartService;
 import jack.changgou.vo.Result;
 import jack.changgou.vo.StatusCode;
-import jack.changgou.vo.TockenDecode;
+import jack.changgou.vo.TokenDecode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +32,7 @@ public class ShopCartController {
      */
     @GetMapping("/add")
     public Result add(Long id, Integer num) throws IOException {
-        Map<String, String> map = TockenDecode.getUserInfo();
+        Map<String, String> map = TokenDecode.getUserInfo();
 
         shopCartService.add(id, num, map.get("username"));
         return new Result(true, StatusCode.OK, "添加购物车成功");
@@ -46,7 +46,7 @@ public class ShopCartController {
     @GetMapping("/list")
     public Result list() throws IOException {
         // SpringSecurity获取用户信息：先获取认证详情，并从中获取令牌，解析令牌后得到用户信息
-        Map<String, String> map = TockenDecode.getUserInfo();
+        Map<String, String> map = TokenDecode.getUserInfo();
 
         String username = map.get("username");
         List<OrderItem> orderItemList = shopCartService.getAll(username);

@@ -2,6 +2,7 @@ package jack.changgou.order;
 
 
 import jack.changgou.vo.FeignRequestInterceptor;
+import jack.changgou.vo.IdWorker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -25,5 +26,14 @@ public class OrderApplication {
     @Bean
     public FeignRequestInterceptor feignRequestInterceptor(){
         return new FeignRequestInterceptor();
+    }
+
+    /**
+     * Id生成器
+     * @return
+     */
+    @Bean
+    public IdWorker idWorker(){
+        return new IdWorker(0, 0);
     }
 }

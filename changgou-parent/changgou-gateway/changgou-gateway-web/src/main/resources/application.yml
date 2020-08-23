@@ -38,7 +38,7 @@ spring:
           - Path=/api/user/**,/api/address/**,/api/area/**,/api/cities/**,/api/provinces/**
           filters:
             - StripPrefix=1
-        # 用户微服务唯一标识
+        # 订单微服务唯一标识
         - id: changgou_order_route
           # 指定要路由的服务
           uri: lb://order

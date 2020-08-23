@@ -81,6 +81,7 @@ public class ShopCartServiceImpl implements ShopCartService {
         orderItem.setImage(spu.getImage());
         orderItem.setPrice(sku.getPrice());
         orderItem.setNum(num);
+        orderItem.setName(sku.getName());
         orderItem.setMoney(num * sku.getPrice());
         orderItem.setWeight(sku.getWeight());
         return orderItem;

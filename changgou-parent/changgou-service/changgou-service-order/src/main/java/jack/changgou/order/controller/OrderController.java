@@ -6,9 +6,11 @@ import jack.changgou.order.pojo.Order;
 import jack.changgou.order.service.OrderService;
 import jack.changgou.vo.Result;
 import jack.changgou.vo.StatusCode;
+import jack.changgou.vo.TokenDecode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /****
@@ -108,12 +110,19 @@ public class OrderController {
 
     /***
      * 新增Order数据
+     * 注意：当前方法必须认证后才能访问，因为需要从令牌中解析用户名
+     * 以后所有需要用到用户名的方法都需要认证才能访问，默认所有方法都需要认证才能访问
+     *
      * @param order
      * @return
      */
     @ApiOperation(value = "Order添加",notes = "添加Order方法详情",tags = {"OrderController"})
     @PostMapping
-    public Result add(@RequestBody  @ApiParam(name = "Order对象",value = "传入JSON数据",required = true) Order order){
+    public Result add(@RequestBody  @ApiParam(name = "Order对象",value = "传入JSON数据",required = true) Order order) throws IOException {
+        // 获取当前用户名，并赋值给order对象，前端并不保证能传递username过来
+        String username = TokenDecode.getUserInfo().get("username");
+        order.setUsername(username);
+
         //调用OrderService实现添加Order
         orderService.add(order);
         return new Result(true,StatusCode.OK,"添加成功");
