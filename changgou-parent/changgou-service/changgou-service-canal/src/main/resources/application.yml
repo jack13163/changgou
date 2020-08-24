@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: canal
+  redis:
+    host: 192.168.137.118
+    port: 6379
+  rabbitmq:
+    host: 192.168.137.118
+    port: 5672
 
 # Eureka注册中心配置信息
 eureka:

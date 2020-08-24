@@ -1,14 +1,11 @@
 package com.changgou.user.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.changgou.user.pojo.User;
+import jack.changgou.user.pojo.User;
 import com.changgou.user.service.UserService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
-import jack.changgou.vo.BCrypt;
-import jack.changgou.vo.JwtUtil;
-import jack.changgou.vo.Result;
-import jack.changgou.vo.StatusCode;
+import jack.changgou.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -186,4 +183,17 @@ public class UserController {
         List<User> list = userService.findAll();
         return new Result<List<User>>(true, StatusCode.OK,"查询成功",list) ;
     }
+
+    /**
+     * 增加用户积分
+     * @param points
+     * @return
+     */
+    @GetMapping("/points/add")
+    public Result addPoints(Integer points) {
+        String username = TokenDecode.getUserInfo().get("username");
+        userService.addUserPoints(username, points);
+        return new Result(true, StatusCode.OK,"增加用户积分成功") ;
+    }
+
 }

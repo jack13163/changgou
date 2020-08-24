@@ -1,6 +1,6 @@
 package com.changgou.user.controller;
 
-import com.changgou.user.pojo.Provinces;
+import jack.changgou.user.pojo.Provinces;
 import com.changgou.user.service.ProvincesService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;

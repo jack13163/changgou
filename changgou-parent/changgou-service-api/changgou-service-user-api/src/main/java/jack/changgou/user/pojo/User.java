@@ -1,4 +1,4 @@
-package com.changgou.user.pojo;
+package jack.changgou.user.pojo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

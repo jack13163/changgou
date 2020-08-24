@@ -1,6 +1,6 @@
 package com.changgou.user.service;
 
-import com.changgou.user.pojo.Address;
+import jack.changgou.user.pojo.Address;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;

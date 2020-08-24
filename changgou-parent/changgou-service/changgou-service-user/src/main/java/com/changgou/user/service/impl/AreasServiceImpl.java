@@ -1,7 +1,7 @@
 package com.changgou.user.service.impl;
 
 import com.changgou.user.dao.AreasMapper;
-import com.changgou.user.pojo.Areas;
+import jack.changgou.user.pojo.Areas;
 import com.changgou.user.service.AreasService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

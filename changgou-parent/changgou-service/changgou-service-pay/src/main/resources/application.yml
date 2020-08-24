@@ -1,0 +1,60 @@
+server:
+  port: 3333
+spring:
+  application:
+    name: pay
+  redis:
+    host: 192.168.137.118
+    port: 6379
+  rabbitmq:
+    host: 192.168.137.118
+    port: 5672
+
+  # 多个接口上的@FeignClient(“相同服务名”)会报错，overriding is disabled。
+  # 设置为true ,即允许同名
+  main:
+    allow-bean-definition-overriding: true
+
+  # 配置spring security默认密码
+  security:
+    user:
+      password: 123456
+      name: user
+
+# Eureka注册中心配置信息
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+# 开启信号量隔离
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+          strategy: SEMAPHORE
+
+# 微信支付信息配置
+weixin:
+  appid: wx8397f8696b538317 # 应用id
+  partner: 1473426802 # 商户id
+  partnerkey: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb # 商户密钥
+  notifyurl: https://callmejack.utools.club/weixin/pay/notify/url # 支付回调地址
+
+
+# 配置RabbitMQ支付队列和交换机信息
+mq:
+  pay:
+    exchange:
+      order: exchange.order
+    queue:
+      order: queue.order
+    routing:
+      key: queue.order

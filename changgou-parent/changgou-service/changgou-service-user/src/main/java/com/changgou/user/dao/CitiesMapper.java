@@ -1,5 +1,5 @@
 package com.changgou.user.dao;
-import com.changgou.user.pojo.Cities;
+import jack.changgou.user.pojo.Cities;
 import tk.mybatis.mapper.common.Mapper;
 
 /****

@@ -1,6 +1,6 @@
 package com.changgou.user.service;
 
-import com.changgou.user.pojo.Provinces;
+import jack.changgou.user.pojo.Provinces;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;

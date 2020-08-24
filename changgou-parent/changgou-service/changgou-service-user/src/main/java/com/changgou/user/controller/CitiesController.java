@@ -1,6 +1,6 @@
 package com.changgou.user.controller;
 
-import com.changgou.user.pojo.Cities;
+import jack.changgou.user.pojo.Cities;
 import com.changgou.user.service.CitiesService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;

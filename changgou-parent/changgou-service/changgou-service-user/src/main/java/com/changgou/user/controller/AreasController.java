@@ -1,6 +1,6 @@
 package com.changgou.user.controller;
 
-import com.changgou.user.pojo.Areas;
+import jack.changgou.user.pojo.Areas;
 import com.changgou.user.service.AreasService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;

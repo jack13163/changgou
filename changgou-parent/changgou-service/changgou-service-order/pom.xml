@@ -26,10 +26,32 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!-- 用户微服务feign调用 -->
+        <dependency>
+            <groupId>jack.changgou</groupId>
+            <artifactId>changgou-service-user-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- oauth2.0 令牌解析使用依赖 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+
+        <!-- 加入rabbitmq的依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <!-- 使用Apache HttpClient替换Feign原生httpclient[IOException: Incomplete output stream] -->
+        <!-- feign-httpclient内含Apache HttpClient -->
+        <!-- https://mvnrepository.com/artifact/io.github.openfeign/feign-httpclient -->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+            <version>11.0</version>
         </dependency>
 
 

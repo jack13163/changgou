@@ -1,7 +1,9 @@
 package jack.changgou.order.service.impl;
 
+import jack.changgou.user.feign.UserFeign;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import feign.Feign;
 import jack.changgou.goods.feign.SkuFeign;
 import jack.changgou.order.dao.OrderMapper;
 import jack.changgou.order.pojo.Order;
@@ -9,12 +11,19 @@ import jack.changgou.order.pojo.OrderItem;
 import jack.changgou.order.service.OrderItemService;
 import jack.changgou.order.service.OrderService;
 import jack.changgou.vo.IdWorker;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessagePostProcessor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /****
@@ -45,6 +54,54 @@ public class OrderServiceImpl implements OrderService {
         Example example = createExample(order);
         //执行搜索
         return new PageInfo<Order>(orderMapper.selectByExample(example));
+    }
+
+    /**
+     * 更新订单状态
+     *
+     * @param orderId:       订单号
+     * @param payTime:       支付时间
+     * @param transactionId: 交易流水号
+     * @return
+     */
+    @Override
+    public boolean updateStatus(String orderId, String payTime, String transactionId) {
+        try {
+            Order order = orderMapper.selectByPrimaryKey(orderId);
+            if (order == null) {
+                return false;
+            }
+
+            order.setPayTime(new SimpleDateFormat("yyyyMMddHHmmss").parse(payTime));
+            order.setPayStatus("1");
+            order.setTransactionId(transactionId);
+
+            orderMapper.updateByPrimaryKeySelective(order);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 删除订单，逻辑删除，支付失败，回滚库存
+     *
+     * @param orderId: 订单号
+     * @return
+     */
+    @Override
+    public boolean deleteOrder(String orderId) {
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        order.setPayStatus("2");// 支付失败
+        order.setUpdateTime(new Date());
+
+        orderMapper.updateByPrimaryKeySelective(order);
+
+        //回滚库存，待实现，需要调用goods微服务
+
+
+        return false;
     }
 
     /**
@@ -231,6 +288,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private SkuFeign skuFeign;
 
+    @Autowired
+    private UserFeign userFeign;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     /**
      * 增加Order订单
      * <p>
@@ -286,9 +349,24 @@ public class OrderServiceImpl implements OrderService {
         // 减少商品库存
         skuFeign.decrCount(map);
 
+        // 添加积分
+        userFeign.addPoints(1);
+
         order.setTotalNum(totalNum);// 商品数量，重要信息，后端指定
         order.setTotalMoney(totalMoney);// 订单总金额
         order.setPayMoney(totalMoney);// 支付金额，没有优惠活动，因此和订单总金额保持一致
+
+        // 添加订单详细到rabbitmq
+        rabbitTemplate.convertAndSend("orderDelayQueue", (Object) order.getId(), new MessagePostProcessor() {
+            @Override
+            public Message postProcessMessage(Message message) throws AmqpException {
+                // 设置消息延时多久过期
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
+                System.out.println(simpleDateFormat.format(new Date()) + ": 创建订单");
+                message.getMessageProperties().setExpiration("60000");
+                return message;
+            }
+        });
 
         orderMapper.insert(order);
     }

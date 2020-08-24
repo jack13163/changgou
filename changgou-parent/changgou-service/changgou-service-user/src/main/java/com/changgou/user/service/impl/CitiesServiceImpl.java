@@ -1,7 +1,7 @@
 package com.changgou.user.service.impl;
 
 import com.changgou.user.dao.CitiesMapper;
-import com.changgou.user.pojo.Cities;
+import jack.changgou.user.pojo.Cities;
 import com.changgou.user.service.CitiesService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

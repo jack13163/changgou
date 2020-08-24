@@ -22,6 +22,22 @@ public interface OrderService {
     PageInfo<Order> findPage(Order order, int page, int size);
 
     /***
+     * 修改订单状态
+     * @param orderId: 订单号
+     * @param payTime: 支付时间
+     * @param transactionId: 交易流水号
+     * @return
+     */
+    boolean updateStatus(String orderId, String payTime, String transactionId);
+
+    /***
+     * 删除
+     * @param orderId: 订单号
+     * @return
+     */
+    boolean deleteOrder(String orderId);
+
+    /***
      * Order分页查询
      * @param page
      * @param size

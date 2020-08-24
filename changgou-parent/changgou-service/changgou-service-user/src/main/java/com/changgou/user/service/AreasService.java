@@ -1,6 +1,6 @@
 package com.changgou.user.service;
 
-import com.changgou.user.pojo.Areas;
+import jack.changgou.user.pojo.Areas;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;

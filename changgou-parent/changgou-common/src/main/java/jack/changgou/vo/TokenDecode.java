@@ -21,7 +21,7 @@ public class TokenDecode {
      * @return
      * @throws IOException
      */
-    public static Map<String, String> getUserInfo() throws IOException {
+    public static Map<String, String> getUserInfo() {
         // 先获取认证详情
         OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
         // 并从中获取令牌
@@ -36,13 +36,18 @@ public class TokenDecode {
      * @return
      * @throws IOException
      */
-    private static Map<String, String> parseToken(String token) throws IOException {
-        Resource resource = new ClassPathResource("public.key");
-        InputStreamReader inputStreamReader = new InputStreamReader(resource.getInputStream());
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        String publicKey = bufferedReader.lines().collect(Collectors.joining("\n"));
-        Jwt jwt = JwtHelper.decodeAndVerify(token, new RsaVerifier(publicKey));
-        String tokenStr = jwt.getClaims();
+    private static Map<String, String> parseToken(String token) {
+        String tokenStr = "";
+        try {
+            Resource resource = new ClassPathResource("public.key");
+            InputStreamReader inputStreamReader = new InputStreamReader(resource.getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String publicKey = bufferedReader.lines().collect(Collectors.joining("\n"));
+            Jwt jwt = JwtHelper.decodeAndVerify(token, new RsaVerifier(publicKey));
+            tokenStr = jwt.getClaims();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         return JSON.parseObject(tokenStr, Map.class);
     }
 }

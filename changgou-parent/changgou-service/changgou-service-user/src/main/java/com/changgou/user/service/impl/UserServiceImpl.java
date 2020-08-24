@@ -1,7 +1,7 @@
 package com.changgou.user.service.impl;
 
 import com.changgou.user.dao.UserMapper;
-import com.changgou.user.pojo.User;
+import jack.changgou.user.pojo.User;
 import com.changgou.user.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -206,5 +206,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userMapper.selectAll();
+    }
+
+    /**
+     * 增加用户积分
+     * @param username
+     * @param points
+     */
+    @Override
+    public void addUserPoints(String username, Integer points) {
+        int columns = userMapper.addUserPoints(username, points);
+        if(columns <= 0){
+            throw new RuntimeException("增加用户积分失败");
+        }
     }
 }

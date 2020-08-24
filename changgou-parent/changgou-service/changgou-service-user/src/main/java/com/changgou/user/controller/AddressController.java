@@ -1,6 +1,6 @@
 package com.changgou.user.controller;
 
-import com.changgou.user.pojo.Address;
+import jack.changgou.user.pojo.Address;
 import com.changgou.user.service.AddressService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
@@ -28,7 +28,7 @@ public class AddressController {
     private AddressService addressService;
 
     @GetMapping("/user/list")
-    public Result<List<Address>> getAddressesByUserName() throws IOException {
+    public Result<List<Address>> getAddressesByUserName() {
         String username = TokenDecode.getUserInfo().get("username");
         List<Address> list = addressService.getAddressesByUserName(username);
         return new Result<List<Address>>(true,StatusCode.OK,"查询[" + username + "]的地址信息成功",list);
