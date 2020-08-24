@@ -1,0 +1,45 @@
+server:
+  port: 6636
+spring:
+  application:
+    name: seckill
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.137.118:3307/changgou_seckill?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 123456
+  redis:
+    host: 192.168.137.118
+    port: 6379
+
+  # 多个接口上的@FeignClient(“相同服务名”)会报错，overriding is disabled。
+  # 设置为true ,即允许同名
+  main:
+    allow-bean-definition-overriding: true
+
+  rabbitmq:
+    host: 192.168.137.118
+    port: 5672
+    username: guest
+    password: guest
+
+# Eureka注册中心配置信息
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+
+# 开启信号量隔离
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+          strategy: SEMAPHORE
