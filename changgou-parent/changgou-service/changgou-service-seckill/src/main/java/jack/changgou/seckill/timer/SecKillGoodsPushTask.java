@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * 定时将数据库中的秒杀商品推送到Redis中
@@ -60,7 +61,23 @@ public class SecKillGoodsPushTask {
             seckillGoods.forEach(goods -> {
                 System.out.println("商品[" + goods.getId() + "]存入Redis缓存中");
                 redisTemplate.boundHashOps(group).put(goods.getId().toString(), goods);// 注意redis中区分String和Double，这里统一为String
+                // 通过Redis队列的方式，解决超卖问题
+                redisTemplate.boundListOps("GoodsList_" + goods.getId()).leftPushAll(generateArray(goods.getId()+"", goods.getStockCount()));
             });
         }
+    }
+
+    /**
+     * 产生指定个数的数组
+     * @param id
+     * @param num
+     * @return
+     */
+    private String[] generateArray(String id, int num) {
+        String[] result = new String[num];
+        for (int i = 0; i < num; i++) {
+            result[i] = id;
+        }
+        return result;
     }
 }

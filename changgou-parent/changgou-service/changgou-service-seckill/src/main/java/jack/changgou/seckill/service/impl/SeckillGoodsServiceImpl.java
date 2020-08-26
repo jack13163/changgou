@@ -5,16 +5,13 @@ import com.github.pagehelper.PageInfo;
 import jack.changgou.seckill.dao.SeckillGoodsMapper;
 import jack.changgou.seckill.pojo.SeckillGoods;
 import jack.changgou.seckill.service.SeckillGoodsService;
-import jack.changgou.vo.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /****
  * @Author:shenkunlin
@@ -161,7 +158,7 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
      */
     @Override
     public void update(SeckillGoods seckillGoods){
-        seckillGoodsMapper.updateByPrimaryKey(seckillGoods);
+        seckillGoodsMapper.updateByPrimaryKeySelective(seckillGoods);
     }
 
     /**

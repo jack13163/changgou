@@ -2,6 +2,7 @@ package jack.changgou.seckill.service;
 
 import com.github.pagehelper.PageInfo;
 import jack.changgou.seckill.pojo.SeckillOrder;
+import jack.changgou.seckill.task.SecKillStatus;
 
 import java.util.List;
 
@@ -50,9 +51,18 @@ public interface SeckillOrderService {
 
     /***
      * 新增SeckillOrder
-     * @param seckillOrder
+     * @param username 用户名
+     * @param time 时间
+     * @param id 商品编号
      */
-    void add(SeckillOrder seckillOrder);
+    boolean add(String username, String time, String id);
+
+    /**
+     * 抢单状态查询
+     *
+     * @param username 用户名
+     */
+    public SecKillStatus queryStatus(String username);
 
     /**
      * 根据ID查询SeckillOrder
@@ -66,4 +76,17 @@ public interface SeckillOrderService {
      * @return
      */
     List<SeckillOrder> findAll();
+
+    /**
+     * 更新订单的状态
+     * @param username
+     * @param payTime
+     * @param transactionId
+     */
+    void updateStatus(String username, String payTime, String transactionId);
+    /**
+     * 删除订单
+     * @param username
+     */
+    void deleteOrder(String username);
 }
